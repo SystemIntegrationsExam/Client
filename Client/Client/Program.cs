@@ -14,60 +14,61 @@ namespace Client
 
         static void Main(string[] args)
         {
-           
-
-            OptionsCreateOrFeedback();
-            Console.WriteLine("---------------------------------------------------------------------------------");
-
-            if(caseVariable == 1)
+            while (true)
             {
-                Rating();
+                OptionsCreateOrFeedback();
                 Console.WriteLine("---------------------------------------------------------------------------------");
-                Location();
-                Console.WriteLine("---------------------------------------------------------------------------------");
-                Description();
-                Console.WriteLine("---------------------------------------------------------------------------------");
-                Gender();
-                Console.WriteLine("---------------------------------------------------------------------------------");
-                Age();
-                Console.WriteLine("---------------------------------------------------------------------------------");
+                if (caseVariable == 1)
+                {
+                    Rating();
+                    Console.WriteLine("---------------------------------------------------------------------------------");
+                    Location();
+                    Console.WriteLine("---------------------------------------------------------------------------------");
+                    Description();
+                    Console.WriteLine("---------------------------------------------------------------------------------");
+                    Gender();
+                    Console.WriteLine("---------------------------------------------------------------------------------");
+                    Age();
+                    Console.WriteLine("---------------------------------------------------------------------------------");
 
-                Console.WriteLine("Hit enter to close session");
-                Console.ReadLine();
-                Client.Close();
+                    //Console.WriteLine("Hit enter to close session");
+                    //Console.ReadLine();
+                    //Client.Close();
+                }
+                else if (caseVariable == 2)
+                {
+                    AvailableCars();
+                    Console.WriteLine("---------------------------------------------------------------------------------");
+
+                    var responseColor = Client.Call(" ");
+                    Console.WriteLine($" [.] Colors available: {responseColor}");
+
+                    Console.WriteLine("---------------------------------------------------------------------------------");
+                    ColoredCars();
+                    Console.WriteLine("---------------------------------------------------------------------------------");
+                    RentCar();
+                    Console.WriteLine("---------------------------------------------------------------------------------");
+
+                    Console.WriteLine("Please provide us with your full name and driverlicens");
+                    var inputNameAndLicense = Console.ReadLine();
+                    Console.WriteLine($" [.] informations: {inputNameAndLicense}");
+                    var responseNameAndLicense = Client.Call(inputNameAndLicense);
+                    Console.WriteLine("Agregation: " + responseNameAndLicense);
+                    Console.WriteLine("---------------------------------------------------------------------------------");
+
+                    //Console.WriteLine("Hit enter to close session");
+                    //Console.ReadLine();
+                    //Client.Close();
+                }
+                else
+                {
+                    Console.WriteLine("ERROR, contact +42 5125123952");
+                }
+                //Client.Close();
             }
-            else if(caseVariable == 2)
-            {
-                AvailableCars();
-                Console.WriteLine("---------------------------------------------------------------------------------");
-
-                var responseColor = Client.Call(" ");
-                Console.WriteLine($" [.] Colors available: {responseColor}");
-
-                Console.WriteLine("---------------------------------------------------------------------------------");
-                ColoredCars();
-                Console.WriteLine("---------------------------------------------------------------------------------");
-                RentCar();
-                Console.WriteLine("---------------------------------------------------------------------------------");
-
-                Console.WriteLine("Please provide us with your full name and driverlicens");
-                var inputNameAndLicense = Console.ReadLine();
-                Console.WriteLine($" [.] informations: {inputNameAndLicense}");
-                var responseNameAndLicense = Client.Call(inputNameAndLicense);
-                Console.WriteLine("Agregation: " + responseNameAndLicense);
-                Console.WriteLine("---------------------------------------------------------------------------------");
-
-                Console.WriteLine("Hit enter to close session");
-                Console.ReadLine();
-                Client.Close();
-            }
-            else
-            {
-                Console.WriteLine("ERROR, contact +42 5125123952");
-            }
-            Console.WriteLine("Hit enter to close session");
-            Console.ReadLine();
-            Client.Close();
+            //Console.WriteLine("Hit enter to close session");
+            //Console.ReadLine();
+            //Client.Close();
         }
 
         /// <summary>
@@ -99,7 +100,7 @@ namespace Client
         {
             Console.WriteLine("Du skal nu til lave et review");
             Console.WriteLine("Hvor man sjerner vil du give servicen? 1-5 :");
-            var inputRating = "R" + " " + Console.ReadLine(); 
+            var inputRating = "R" + " " + Console.ReadLine();
             Console.WriteLine($" [x] your choice to give: {inputRating} stars");
             var responseRating = Client.Call(inputRating);
 
@@ -143,6 +144,13 @@ namespace Client
             Console.WriteLine($" [x] your age is: {inputAge}");
             var responseAge = Client.Call("R" + " " + inputAge);
 
+            //if (responseAge == "bil blev ikke fundet")
+            //{
+            //    Console.WriteLine($" [.] Got: '{responseAvailable}'");
+            //    AvailableCars();
+            //}
+            //Console.WriteLine($" [.] Got: '{responseAvailable}'");
+
             Console.WriteLine($" [.] Got: '{responseAge}'");
         }
 
@@ -173,8 +181,8 @@ namespace Client
             Console.WriteLine("Write the name of the color you want:");
             var inputColor = Console.ReadLine();
             Console.WriteLine($" [x] Collection the car(s) with the color: {inputColor}");
-            var responeCarColor = Client.Call(inputColor);  
-            if(responeCarColor == "Please type a color to preceed")
+            var responeCarColor = Client.Call(inputColor);
+            if (responeCarColor == "Please type a color to preceed")
             {
                 Console.WriteLine($" [.] Got: {responeCarColor}");
                 ColoredCars();
@@ -187,7 +195,7 @@ namespace Client
             else
             {
                 string[] cars = responeCarColor.Split('-');
-                Array.Resize(ref cars, cars.Length-1);
+                Array.Resize(ref cars, cars.Length - 1);
                 int counter = 1;
                 foreach (var car in cars)
                 {
