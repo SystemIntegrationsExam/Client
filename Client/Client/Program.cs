@@ -48,12 +48,7 @@ namespace Client
                     Console.WriteLine("---------------------------------------------------------------------------------");
                     RentCar();
                     Console.WriteLine("---------------------------------------------------------------------------------");
-
-                    Console.WriteLine("Please provide us with your full name and driverlicens");
-                    var inputNameAndLicense = Console.ReadLine();
-                    Console.WriteLine($" [.] informations: {inputNameAndLicense}");
-                    var responseNameAndLicense = Client.Call(inputNameAndLicense);
-                    Console.WriteLine("Agregation: " + responseNameAndLicense);
+                    CreateCar();
                     Console.WriteLine("---------------------------------------------------------------------------------");
 
                     //Console.WriteLine("Hit enter to close session");
@@ -64,6 +59,7 @@ namespace Client
                 {
                     Console.WriteLine("ERROR, contact +42 5125123952");
                 }
+                Console.Clear();
                 //Client.Close();
             }
             //Console.WriteLine("Hit enter to close session");
@@ -151,7 +147,16 @@ namespace Client
             //}
             //Console.WriteLine($" [.] Got: '{responseAvailable}'");
 
+            if (responseAge != "Age registered ok")
+            {
+                Console.WriteLine($" [.] Got: '{responseAge}'");
+                Age();
+            }
             Console.WriteLine($" [.] Got: '{responseAge}'");
+            Console.WriteLine("---------------------------------------------------------------------------------");
+            Console.WriteLine("A Review was successfully created");
+            Console.WriteLine("Press ENTER to Continue");
+            Console.ReadLine();
         }
 
         /// <summary>
@@ -226,5 +231,25 @@ namespace Client
             }
 
         }
+        private static void CreateCar()
+        {
+            Console.WriteLine("Please provide us with your full name and driverlicens");
+            var inputNameAndLicense = Console.ReadLine();
+            Console.WriteLine($" [.] informations: {inputNameAndLicense}");
+            var responseNameAndLicense = Client.Call(inputNameAndLicense);
+            Console.WriteLine("Agregation: " + responseNameAndLicense);
+
+            if (responseNameAndLicense == "")
+            {
+                Console.WriteLine($" [.] Got: '{responseNameAndLicense}', nothing happend.. please try agian later..");
+                AvailableCars();
+            }
+            Console.WriteLine($" [.] Got: '{responseNameAndLicense}'");
+            Console.WriteLine("---------------------------------------------------------------------------------");
+            Console.WriteLine("A Booking was successfully created");
+            Console.WriteLine("Press ENTER to Continue");
+            Console.ReadLine();
+        }
+       
     }
 }
